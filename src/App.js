@@ -22,7 +22,14 @@ class App extends Component {
 
   login() {
     let { REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID } = process.env;
-    window.location = `https://${REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${encodeURIComponent(window.location.origin + '/auth/callback')}&response_type=code`;
+    let baseUrl = `https://${REACT_APP_AUTH0_DOMAIN}`;
+    let encodedRedirectURI = encodeURIComponent(`${window.location.origin}/auth/callback`);
+
+    window.location = baseUrl + 
+                      `/authorize?client_id=${REACT_APP_AUTH0_CLIENT_ID}` +
+                      `&scope=openid%20profile%20email` +
+                      `&redirect_uri=${encodedRedirectURI}` +
+                      `&response_type=code`;
   }
 
   logout() {
